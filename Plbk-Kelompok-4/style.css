@@ -139,3 +139,111 @@ body {
 .empty-state { flex: 1; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 40px 20px; display: none; }
 .empty-icon { font-size: 32px; color: var(--text3); }
 .empty-state p { font-size: 13px; color: var(--text3); text-align: center; line-height: 1.7; }
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(26,26,46,0.45);
+  backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+.modal-overlay.show { display: flex; }
+
+.modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px; width: 340px;
+  display: flex; flex-direction: column; gap: 14px;
+  animation: popIn 0.22s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.88) translateY(12px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.modal-title { font-size: 17px; font-weight: 700; color: var(--text); }
+.modal-coords { font-size: 12px; color: var(--text2); background: var(--surface2); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; }
+
+.modal input {
+  padding: 12px 16px; border-radius: 12px;
+  border: 1.5px solid var(--border2);
+  background: var(--surface2); color: var(--text);
+  font-size: 15px; font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none; width: 100%; font-weight: 500; transition: border-color 0.2s;
+}
+.modal input:focus { border-color: var(--accent); background: white; }
+.modal input::placeholder { color: var(--text3); font-weight: 400; }
+
+.modal-actions { display: flex; gap: 10px; }
+
+.btn-cancel {
+  flex: 1; padding: 12px; border-radius: 12px;
+  border: 1.5px solid var(--border2); background: var(--surface2);
+  color: var(--text2); cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 600; transition: all 0.2s;
+}
+.btn-cancel:hover { background: var(--surface3); color: var(--text); }
+
+.btn-save {
+  flex: 2; padding: 12px; border-radius: 12px; border: none;
+  background: var(--accent); color: white; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 700; transition: all 0.2s;
+}
+.btn-save:hover { background: #4a3ee8; transform: translateY(-1px); }
+.btn-save:active { transform: translateY(0); }
+
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(26,26,46,0.45);
+  backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+.modal-overlay.show { display: flex; }
+
+.modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 20px; padding: 28px; width: 340px;
+  display: flex; flex-direction: column; gap: 14px;
+  animation: popIn 0.22s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.88) translateY(12px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.modal-title { font-size: 17px; font-weight: 700; color: var(--text); }
+.modal-coords { font-size: 12px; color: var(--text2); background: var(--surface2); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; }
+
+.modal input {
+  padding: 12px 16px; border-radius: 12px;
+  border: 1.5px solid var(--border2);
+  background: var(--surface2); color: var(--text);
+  font-size: 15px; font-family: 'Plus Jakarta Sans', sans-serif;
+  outline: none; width: 100%; font-weight: 500; transition: border-color 0.2s;
+}
+.modal input:focus { border-color: var(--accent); background: white; }
+.modal input::placeholder { color: var(--text3); font-weight: 400; }
+
+.modal-actions { display: flex; gap: 10px; }
+
+.btn-cancel {
+  flex: 1; padding: 12px; border-radius: 12px;
+  border: 1.5px solid var(--border2); background: var(--surface2);
+  color: var(--text2); cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 600; transition: all 0.2s;
+}
+.btn-cancel:hover { background: var(--surface3); color: var(--text); }
+
+.btn-save {
+  flex: 2; padding: 12px; border-radius: 12px; border: none;
+  background: var(--accent); color: white; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 700; transition: all 0.2s;
+}
+.btn-save:hover { background: #4a3ee8; transform: translateY(-1px); }
+.btn-save:active { transform: translateY(0); }
