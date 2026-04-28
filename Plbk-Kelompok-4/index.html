@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Map Marker - Plbk Kelompok 4</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- HEADER -->
+      <div class="sidebar-header">
+        <div class="logo-mark">M</div>
+        <div>
+          <div class="app-title">Map Marker</div>
+          <div class="app-sub">Plbk Kelompok 4</div>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num" id="markerCount">0</div>
+          <div class="stat-label">Marker</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="lastAdded">—</div>
+          <div class="stat-label">Terakhir</div>
+        </div>
+      </div>
+
+      <!-- LIST HEADER -->
+      <div class="list-header">
+        <span>Daftar Lokasi</span>
+        <button class="btn-clear" onclick="clearAll()">Hapus Semua</button>
+      </div>
+
+      <!-- LIST -->
+      <ul id="markerList"></ul>
+
+      <!-- EMPTY STATE -->
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">◎</div>
+        <p>Klik pada peta untuk<br>menambahkan marker</p>
+      </div>
+
+    </div>
+
+    <!-- MAP -->
+    <div class="map-area">
+      <div id="map"></div>
+    </div>
+
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-title">Beri Nama Lokasi</div>
+      <div class="modal-coords" id="modalCoords"></div>
+      <input type="text" id="modalInput" placeholder="Nama lokasi..." autofocus/>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="cancelMarker()">Batal</button>
+        <button class="btn-save" onclick="saveMarker()">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
