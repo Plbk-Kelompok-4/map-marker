@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Map Marker — Kelompok 4</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="header">
+      <h1>Map Marker — Kelompok 4</h1>
+      <span id="total-marker">Loading...</span>
+    </div>
+
+    <div id="lokasi-panel">
+      <div class="lokasi-title">Pergi ke Titik</div>
+      <div id="lokasi-buttons"></div>
+    </div>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script src="maker.js"></script>
+
+    <script>
+      const map = L.map("map").setView([5.0, 96.5], 8);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 19,
+      }).addTo(map);
+
+      const warna = {
+        diki: "#e67e22",
+        dayat: "#9b59b6",
+        mirdas: "#1abc9c",
+        gudang: "#e74c3c",
+        kampus: "#e67e22",
+        gedungAAC: "#9b59b6",
+        polda: "#1abc9c",
+      };
+
+      const daftarLokasi = [];
+
+      function buatIkon(warna) {
+        return L.divIcon({
+          className: "",
+          html: `<div style="
+        width:14px; height:14px;
+        background:${warna};
+        border:2px solid white;
+        border-radius:50%;
+        box-shadow:0 1px 4px rgba(0,0,0,0.4);
+      "></div>`,
+          iconSize: [14, 14],
+          iconAnchor: [7, 7],
+        });
+      }
+
+      function tambahMarkers(data, warnaDot, namaAnggota) {
+        data.forEach(function (item) {
+          const marker = L.marker([item.lat, item.lng], {
+            icon: buatIkon(warnaDot),
+          }).addTo(map).bindPopup(`
+          <b>${item.nama}</b><br>
+          <span style="color:#666;font-size:12px">${item.deskripsi || ""}</span><br>
+          <span style="color:#999;font-size:11px">oleh: ${namaAnggota}</span><br>
+          <span style="color:#999;font-size:11px">${item.lat}, ${item.lng}</span>
+        `);
+
+          daftarLokasi.push({
+            nama: item.nama,
+            lat: item.lat,
+            lng: item.lng,
+            kontributor: namaAnggota,
+            marker,
+          });
+        });
+      }
+
+      tambahMarkers(markersDiki, warna.diki, "Diki");
+      tambahMarkers(markersDayat, warna.dayat, "Dayat");
+      tambahMarkers(markersMirdas, warna.mirdas, "Amirul Mirdas");
+      tambahMarkers(markersGudang, warna.gudang, "Amirul Mirdas");
+      tambahMarkers(markersKampus, warna.kampus, "Diki");
+      tambahMarkers(markersGedungAAC, warna.gedungAAC, "Dayyat");
+      tambahMarkers(markersPolda, warna.polda, "Amirul Mirdas");
+
+      function renderLokasiButtons() {
+        const container = document.getElementById("lokasi-buttons");
+
+        if (daftarLokasi.length === 0) {
+          container.innerHTML =
+            '<div class="lokasi-empty">Belum ada marker untuk dituju.</div>';
+          return;
+        }
+
+        daftarLokasi.forEach(function (lokasi) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "lokasi-btn";
+          button.textContent = `${lokasi.nama} (${lokasi.kontributor})`;
+
+          button.addEventListener("click", function () {
+            map.flyTo([lokasi.lat, lokasi.lng], 15, { duration: 1.2 });
+            lokasi.marker.openPopup();
+          });
+
+          container.appendChild(button);
+        });
+      }
+
+      renderLokasiButtons();
+
+      const total =
+        markersDiki.length +
+        markersDayat.length +
+        markersMirdas.length +
+        markersGudang.length +
+        markersKampus.length +
+        markersPolda.length +
+        markersGedungAAC.length;
+      document.getElementById("total-marker").textContent = total + " lokasi";
+
+      const legend = L.control({ position: "bottomright" });
+      legend.onAdd = function () {
+        const div = L.DomUtil.create("div", "legend");
+        div.innerHTML = `
+      <div class="legend-title">Kontributor</div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:${warna.diki}"></div> Diki (${markersDiki.length})
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:${warna.dayat}"></div> Dayat (${markersDayat.length})
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:${warna.mirdas}"></div> Mirdas (${markersMirdas.length})
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:${warna.gudang}"></div> Gudang (${markersGudang.length})
+      </div>
+       <div class="legend-item">
+        <div class="legend-dot" style="background:${warna.kampus}"></div> Kampus (${markersKampus.length})
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:${warna.gedungAAC}"></div> Gedung AAC (${markersGedungAAC.length})
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:${warna.polda}"></div> Polda Aceh (${markersPolda.length})
+      </div>
+    `;
+        return div;
+      };
+      legend.addTo(map);
+    </script>
+  </body>
+</html>
